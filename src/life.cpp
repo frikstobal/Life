@@ -127,7 +127,7 @@ int main() {
 }
 //**********************************This method takes care of the grid update according to the colony rules*****************************************************************+
 
- void GridUpdate(Grid<bool>& colony, Grid<bool> colonyCopy ){
+ void GridUpdate(Grid<bool>& colony, Grid<bool>& colonyCopy ){
 
      int cellX = 2;
      int cellY = 3;
@@ -153,90 +153,95 @@ int main() {
  void animateGrid(const Grid<bool>& colony ,int rows, int columns , LifeGUI& theGUI){
 
      theGUI.resize(rows,columns);                                                         //the gui gets resized depending on the file
-
      for(int i = 0; i < rows; i++){                                                       //here we scan each row and column of thw grid
-
          for(int j = 0; j < columns; j++){
-
              bool value;                                                                  //temporary storage for the cell value
-
              value = colony[i][j];                                                        //value of the coordinte (todo -> optimize)
-
              theGUI.drawCell(i,j,value);                                                  //cell redraw
-
          }
-
      }
 
 
 
  }
 
- bool lookForNeighbours(int& x, int& y){
-    Vector<int> locations[8];
+ //**************Scans each one of the neighbours of the cell and storages the alues in a vector*****
 
+ bool lookForNeighbours(int& x, int& y, const vector<bool>& colony ){
+    Vector<int> locations[8];    // locations of all cells get storaged here
     locations->insert( 0,
-                       upperLeft(x , y)
-                                        );
-
+                       upperLeft(x , y));  //scan first position and store in the array, the same with all the other values up to the lower left cell
     locations->insert( 1,
-                       up(x , y)
-                                );
-
+                       up(x , y));
     locations->insert( 2,
-                       upperRight(x , y)
-                                        );
-
+                       upperRight(x , y));
     locations->insert( 3,
-                       left(x , y)
-                                  );
-
+                       left(x , y));
     locations->insert( 4,
-                       right(x , y)
-                                   );
-
+                       right(x , y));
     locations->insert( 5,
-                       lowerLeft(x , y)
-                                       );
-
+                       lowerLeft(x , y));
     locations->insert( 6,
-                       down(x , y)
-                                  );
-
+                       down(x , y));
     locations->insert( 7,
-                       lowerRight(x , y)
-                                        );
-
-
-        int numberOfNeighbours = 0;
-
-        for(int count = 0; count < locations->size(); count++){
-
+                       lowerRight(x , y));
+        int numberOfNeighbours = 0;                                                                                        // variable to store all the neighbours
+        for(int count = 0; count < locations->size(); count++){                                                            //loop through the lovation values
                                                                     int cellValue = locations->get(count);
-
-                                                                    numberOfNeighbours = numberOfNeighbours + cellValue;
+                                                                    numberOfNeighbours = numberOfNeighbours + cellValue;   //we add the values progressively
                                                                }
-
-        if(numberOfNeighbours >= 3){
-                                        return true;
+        if(numberOfNeighbours >= 3){ return true;                                                                          //if there are more than three neighbours, the cell is alive
                                                         }
-                            else{
-                                        return false;
+                            else{   return false;                                                                          //if not, then is dead
                                                         }
  }
 
- int upperLeft(int x ,int y){}
 
- int up(int x ,int y){}
+ int upperLeft(int x ,int y, const Grid<bool>& colony){                                                                     //need to optimize this redundant code
+     bool isAlive = colony.get(x,y);
+     if(isAlive)return 1;
+         else return 0;
+ }
 
- int upperRight(int x ,int y){}
+ int up(int x ,int y, const Grid<bool>& colony){
+     bool isAlive = colony.get(x,y);
+     if(isAlive)return 1;
+         else return 0;
+ }
 
- int left(int x ,int y){}
+ int upperRight(int x ,int y, const Grid<bool>& colony){
+     bool isAlive = colony.get(x,y);
+     if(isAlive)return 1;
+         else return 0;
+ }
 
- int right(int x ,int y){}
+ int left(int x ,int y, const Grid<bool>& colony){
+     bool isAlive = colony.get(x,y);
+     if(isAlive)return 1;
+         else return 0;
+ }
 
- int lowerLeft(int x ,int y){}
+ int right(int x ,int y, const Grid<bool>& colony){
+     bool isAlive = colony.get(x,y);
+     if(isAlive)return 1;
+         else return 0;
+ }
 
- int down(int x ,int y){}
+ int lowerLeft(int x ,int y, const Grid<bool>& colony){
+     bool isAlive = colony.get(x,y);
+     if(isAlive) return 1;
+         else return 0;
+ }
 
- int lowerRight(int x ,int y){}
+ int down(int x ,int y, const Grid<bool>& colony){
+     bool isAlive = colony.get(x,y);
+     if(isAlive) return 1;
+         else return 0;
+ }
+
+ int lowerRight(int x ,int y, const Grid<bool>& colony){
+     bool isAlive = colony.get(x,y);
+     if(isAlive)
+         return 1;
+         else return 0;
+ }
