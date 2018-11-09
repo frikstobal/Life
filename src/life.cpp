@@ -19,8 +19,18 @@
 using namespace std;
 
 void createGrid(Grid<bool>& colony, string Fname, int& rows, int& columns);
-
+void GridUpdate(Grid<bool>& colony, Grid<bool> colonyCopy);
 void animateGrid(const Grid<bool>& colony , int rows, int columns , LifeGUI& gui );
+bool lookForNeighbours(int& x, int& y);
+int upperLeft(int x ,int y);
+int up(int x ,int y);
+int upperRight(int x ,int y);
+int left(int x ,int y);
+int right(int x ,int y);
+int lowerLeft(int x ,int y);
+int down(int x ,int y);
+int lowerRight(int x ,int y);
+
 
 int main() {
 
@@ -115,8 +125,30 @@ int main() {
 
 
 }
+//**********************************This method takes care of the grid update according to the colony rules*****************************************************************+
 
-//************************++++HERE WE UPDATE THE GUI************************************************************************
+ void GridUpdate(Grid<bool>& colony, Grid<bool> colonyCopy ){
+
+     int cellX = 2;
+     int cellY = 3;
+
+     lookForNeighbours(cellX, cellY);
+
+
+     int maxX = colony.nRows;
+     int maxY = colony.nCols;
+     for(int Xpos; Xpos < maxX; Xpos++){
+         for(int Ypos; Ypos < maxY; Ypos++){
+
+         }
+     }
+
+ }
+
+
+
+
+//************************++++HERE WE UPDATE THE GUI*************************************************************************************************************************
 
  void animateGrid(const Grid<bool>& colony ,int rows, int columns , LifeGUI& theGUI){
 
@@ -137,4 +169,74 @@ int main() {
      }
 
 
+
  }
+
+ bool lookForNeighbours(int& x, int& y){
+    Vector<int> locations[8];
+
+    locations->insert( 0,
+                       upperLeft(x , y)
+                                        );
+
+    locations->insert( 1,
+                       up(x , y)
+                                );
+
+    locations->insert( 2,
+                       upperRight(x , y)
+                                        );
+
+    locations->insert( 3,
+                       left(x , y)
+                                  );
+
+    locations->insert( 4,
+                       right(x , y)
+                                   );
+
+    locations->insert( 5,
+                       lowerLeft(x , y)
+                                       );
+
+    locations->insert( 6,
+                       down(x , y)
+                                  );
+
+    locations->insert( 7,
+                       lowerRight(x , y)
+                                        );
+
+
+        int numberOfNeighbours = 0;
+
+        for(int count = 0; count < locations->size(); count++){
+
+                                                                    int cellValue = locations->get(count);
+
+                                                                    numberOfNeighbours = numberOfNeighbours + cellValue;
+                                                               }
+
+        if(numberOfNeighbours >= 3){
+                                        return true;
+                                                        }
+                            else{
+                                        return false;
+                                                        }
+ }
+
+ int upperLeft(int x ,int y){}
+
+ int up(int x ,int y){}
+
+ int upperRight(int x ,int y){}
+
+ int left(int x ,int y){}
+
+ int right(int x ,int y){}
+
+ int lowerLeft(int x ,int y){}
+
+ int down(int x ,int y){}
+
+ int lowerRight(int x ,int y){}
