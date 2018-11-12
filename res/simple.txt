@@ -1,10 +1,10 @@
 5
 9
----------
+X-------X
 ---------
 ---XXX---
 ---------
----------
+X-------X
 
 # jzelenski
 # This is a very simple colony, good for a first test case. 

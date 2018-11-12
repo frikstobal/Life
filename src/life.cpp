@@ -30,6 +30,7 @@ int right(int x ,int y, const Grid<bool>& colony);
 int lowerLeft(int x ,int y, const Grid<bool>& colony);
 int down(int x ,int y, const Grid<bool>& colony);
 int lowerRight(int x ,int y, const Grid<bool>& colony);
+void wrap(int& cellScanX, int& cellScanY,const Grid<bool>& colony);
 
 
 int main() {
@@ -45,10 +46,11 @@ int main() {
 
     createGrid(colony, colonyCopy, filename, rows, columns);
 
-
+ int var = 0;
     while(true){
         animateGrid(colony, rows, columns, gui);
         GridUpdate(colony, colonyCopy);
+       //debug ++var;
 
     }
     //cout << " Colony " << colony << endl;
@@ -209,6 +211,9 @@ int main() {
  int down(int x ,int y, const Grid<bool>& colony){
      int cellScanX = x ;
      int cellScanY = y + 1;
+
+     wrap(cellScanX , cellScanY, colony);
+
       if (colony.inBounds( cellScanX, cellScanY)){
      bool isAlive = colony.get(cellScanX ,cellScanY);
     // cout << cellScanX  << " y " << cellScanY << " present " << isAlive << endl;
@@ -221,6 +226,9 @@ int main() {
  int lowerRight(int x ,int y, const Grid<bool>& colony){
      int cellScanX = x + 1;
      int cellScanY = y + 1;
+
+     wrap(cellScanX , cellScanY, colony);
+
       if (colony.inBounds( cellScanX, cellScanY)){
      bool isAlive = colony.get(cellScanX, cellScanY);
     // cout << cellScanX  << " y " << cellScanY << " present " << isAlive << endl;
@@ -233,6 +241,9 @@ int main() {
  int left(int x ,int y, const Grid<bool>& colony){
      int cellScanX = x - 1;
      int cellScanY = y;
+
+     wrap(cellScanX , cellScanY, colony);
+
       if (colony.inBounds( cellScanX, cellScanY)){
      bool isAlive = colony.get(cellScanX, cellScanY);
      //cout << cellScanX  << " y " << cellScanY << " present " << isAlive << endl;
@@ -245,6 +256,9 @@ int main() {
  int right(int x ,int y, const Grid<bool>& colony){
      int cellScanX = x + 1;
      int cellScanY = y;
+
+     wrap(cellScanX , cellScanY, colony);
+
       if (colony.inBounds( cellScanX, cellScanY)){
      bool isAlive = colony.get(cellScanX, cellScanY);
     // cout << cellScanX  << " y " << cellScanY << " present " << isAlive << endl;
@@ -257,6 +271,9 @@ int main() {
  int upperLeft(int x ,int y, const Grid<bool>& colony){
      int cellScanX = x - 1;
      int cellScanY = y - 1;
+
+     wrap(cellScanX , cellScanY, colony);
+
       if (colony.inBounds( cellScanX, cellScanY)){
      bool isAlive = colony.get(cellScanX, cellScanY);
     // cout << cellScanX  << " y " << cellScanY << " present " << isAlive << endl;
@@ -269,6 +286,9 @@ int main() {
  int up(int x ,int y, const Grid<bool>& colony){
      int cellScanX = x;
      int cellScanY = y - 1;
+
+     wrap(cellScanX , cellScanY, colony);
+
       if (colony.inBounds( cellScanX, cellScanY)){
      bool isAlive = colony.get(cellScanX, cellScanY);
     // cout << cellScanX  << " y " << cellScanY << " present " << isAlive << endl;
@@ -281,6 +301,9 @@ int main() {
  int upperRight(int x ,int y, const Grid<bool>& colony){
      int cellScanX = x + 1;
      int cellScanY = y - 1;
+
+     wrap(cellScanX , cellScanY, colony);
+
       if (colony.inBounds( cellScanX, cellScanY)){
      bool isAlive = colony.get(cellScanX, cellScanY);
     // cout << cellScanX  << " y " << cellScanY << " present " << isAlive << endl;
@@ -289,4 +312,20 @@ int main() {
          else return 0;
      }
       else {return 0;}
+ }
+
+ void wrap(int& cellScanX, int& cellScanY,const Grid<bool>& colony){ // <- fix this method
+
+     if (!colony.inBounds( cellScanX, cellScanY)){
+   //  cout << cellScanX <<  " cellscanx " << cellScanY << " cellScany " << endl;
+
+     if (cellScanX > colony.numCols()) cellScanX =  cellScanX % colony.numCols();
+     else if(cellScanX < 0) cellScanX = (cellScanX + colony.numCols() ) % colony.numCols();
+
+     if (cellScanY > colony.numRows()) cellScanY =  cellScanY % colony.numRows();
+     else if (cellScanY < 0) cellScanY = ( cellScanY + colony.numRows() ) % colony.numRows();
+
+   //  cout << cellScanX <<  " second Step cellscanx " << cellScanY << " cellScany " << endl;
+        }
+
  }

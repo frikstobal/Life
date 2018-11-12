@@ -21,7 +21,7 @@ using namespace std;
 
 static const int kMaxAge = 3;  // maximum age before color fading ends
 
-const string LifeGUI::kDefaultWindowTitle("CS 106B Game of Life");
+const string LifeGUI::kDefaultWindowTitle("Game of Life");
 
 LifeGUI::LifeGUI() : window(kDisplayWidth, kDisplayHeight) {
     initializeColors();
